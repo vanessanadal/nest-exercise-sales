@@ -15,7 +15,7 @@ jobs:
         - name: Setup node environment
           uses: actions/setup-node@v1
           with:
-            node-version: '14.x'
+            node-version: '18.x'
             
         - name: Install serverless globally
           run: npm install -g serverless
