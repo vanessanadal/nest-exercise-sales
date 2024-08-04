@@ -6,7 +6,7 @@ import { AuthModule } from '../../src/auth/auth.module';
 import { UsersModule } from '../../src/users/users.module';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { User } from '../../src/users/models/user.entity';
-import { Role } from 'src/auth/enums/roles.enum';
+import { Role } from '../../src/auth/enums/roles.enum';
 
 
 jest.mock('bcryptjs', () => {

@@ -1,7 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthController } from './auth.controller';
-import { Role } from './../enums/roles.enum';
 import { UsersService } from './../../users/services/users.service';
+import { AuthService } from '../services/auth.service';
+import { Role } from './../enums/roles.enum';
 
 describe('AuthController', () => {
   let authController: AuthController;
@@ -26,6 +27,10 @@ describe('AuthController', () => {
               deletedAt: null,
             }),
           },
+        },
+        {
+          provide: AuthService,
+          useValue: {},
         },
       ],
     }).compile();
