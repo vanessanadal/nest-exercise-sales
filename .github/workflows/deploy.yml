@@ -1,33 +1,36 @@
 name: lambda-deployment-with-github-action-test
 
-on: 
+on:
   push:
     branches:
-        main
-  
+      - main
+
 jobs:
   lambda-deploy:
     runs-on: ubuntu-latest
     steps:
-        - name: Checkout to repo
-          uses: actions/checkout@v2
+      - name: Checkout repo
+        uses: actions/checkout@v2
 
-        - name: Setup node environment
-          uses: actions/setup-node@v1
-          with:
-            node-version: '18.x'
-            
-        - name: Install serverless globally
-          run: npm install -g serverless
+      - name: Setup node environment
+        uses: actions/setup-node@v1
+        with:
+          node-version: '18.x'
 
-        - name: login serverless
-          run: sls login --license eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJzY3JpcHRpb25JZCI6IjVmZDUzNjAzLWQ3ZWItNDQ0MS1iNDI2LWY2ODMxYWNiNGU5NyIsIm9yZ0lkIjoiZTI3MDE1MDEtNzgwZS00NmU5LWFhMjEtYzU5MDI0OWI0NDM5IiwiaWF0IjoxNzIyODE0OTQwLCJleHAiOjE3NTQzNTA5NDAsImlzcyI6ImFwcC5zZXJ2ZXJsZXNzLmNvbSJ9.SkhuiVEsFybq1eP0PzWttOCFlQQkZj6EK2ZYeMv38SNn9FN3twfrfCOTwDVFRHgBeFBDYLaiparFJRGxE4szZyRhxQlWOK-E27Z8rpGunLA9i83Je7Ihv1NDWRgTSx-uAfahuUnDtHFXuOD8GXCq94Xrj2GOQDl2bgwT2G-hRR2DKXd1T_iTiTwsX0Crwcp-HC_6j1v30oeXbbEjHoU2PGA_OdUloT2wiBXQ4HRtaAtcrnPMfWbDnzCQ5z27ehZ3-eQep2ThOzW2p3jBqxAXt4C-mCBF6MALGQpef-Y2bww0T0MAxDCRil0lrjI46ZLppNzal8Sz6_TFE51Qb_98PA
-        
-        - name: Configure serverless authentication
-          run: sls config credentials --provider aws --key ${{ secrets.AWS_ACCESS_KEY_ID }} --secret ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - name: Install serverless globally
+        run: npm install -g serverless
 
-        - name: Install npm dependencies
-          run: npm ci
-      
-        - name: Deploy lambda function
-          run: sls deploy 
+      - name: Configure AWS credentials
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+          aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+          aws configure set region us-east-1 # Ajusta según tu región
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Deploy lambda function
+        run: serverless deploy
