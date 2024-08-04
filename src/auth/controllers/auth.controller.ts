@@ -22,7 +22,7 @@ import { CreateRoleDto } from './dto/create-role.dto';
 
 @ApiTags('Auth')
 @Controller('api/auth')
-@UseGuards(JwtAuthGuard, RolesGuard)
+@UseGuards(RolesGuard)
 export class AuthController {
   constructor(private authService: AuthService, private userService: UsersService) { }
 

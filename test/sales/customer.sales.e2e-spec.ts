@@ -57,7 +57,7 @@ describe('SalesController (e2e)', () => {
   const mockUserRepository = {
     findOne: jest
       .fn()
-      .mockImplementation((user) => Promise.resolve({ ...user, id: 1 })),
+      .mockImplementation((user) => Promise.resolve({ ...user, id: 1, roles: ['admin'] })),
   };
 
   beforeEach(async () => {
