@@ -6,7 +6,7 @@ useDotenv: true
 
 plugins:
   - serverless-offline
-  
+
 package:
   exclude:
     - node_modules/**
@@ -32,6 +32,10 @@ provider:
 functions:
   main:
     handler: dist/serverless.handler
+    package:
+      include:
+        - node_modules/serverless-offline/**
+
     events:
       - http:
           method: ANY
