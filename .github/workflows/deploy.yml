@@ -30,7 +30,7 @@ jobs:
           aws configure set region us-east-1 
 
       - name: Install npm dependencies
-        run: npm ci
+        run: npm i
 
       - name: Deploy lambda function
         run: serverless deploy
