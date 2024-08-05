@@ -35,4 +35,5 @@ jobs:
       - name: Deploy lambda function
         env:
           SERVERLESS_LICENSE_KEY: ${{ secrets.SERVERLESS_LICENSE_KEY }}
+          PORT: ${{ env.PORT }}
         run: serverless deploy
