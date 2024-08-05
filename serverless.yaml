@@ -6,6 +6,12 @@ useDotenv: true
 
 plugins:
   - serverless-offline
+  
+package:
+  exclude:
+    - node_modules/**
+    - .gitignore
+    - .git/**
 
 provider:
   name: aws
