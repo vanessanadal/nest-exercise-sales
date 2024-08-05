@@ -36,4 +36,10 @@ jobs:
         env:
           SERVERLESS_LICENSE_KEY: ${{ secrets.SERVERLESS_LICENSE_KEY }}
           PORT: ${{ env.PORT }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASS: ${{ secrets.DB_PASS }}
+          DB_DATABASE: ${{ secrets.DB_DATABASE }}
         run: serverless deploy
