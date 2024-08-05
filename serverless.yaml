@@ -13,6 +13,12 @@ package:
     - .gitignore
     - .git/**
 
+layers:
+  commonModules:
+    path: layer
+    compatibleRuntimes:
+      - nodejs18.x
+
 provider:
   name: aws
   runtime: nodejs18.x
