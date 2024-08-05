@@ -9,4 +9,3 @@ export class CreateRoleDto {
     @IsEnum(Role)
     role: string;
 }
-
