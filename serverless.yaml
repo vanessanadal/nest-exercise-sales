@@ -34,3 +34,5 @@ functions:
 custom:
   optimize:
     external: ['swagger-ui-dist']
+  serverless:
+    licenseKey: ${env:SERVERLESS_LICENSE_KEY}
