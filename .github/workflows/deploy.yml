@@ -50,3 +50,4 @@ jobs:
           DB_PASS: ${{ secrets.DB_PASS }}
           DB_DATABASE: ${{ secrets.DB_DATABASE }}
         run: npx serverless deploy
+        
