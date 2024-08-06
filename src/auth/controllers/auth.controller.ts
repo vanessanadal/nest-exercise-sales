@@ -22,7 +22,6 @@ import { CreateRoleDto } from './dto/create-role.dto';
 
 @ApiTags('Auth')
 @Controller('api/auth')
-@UseGuards(RolesGuard)
 export class AuthController {
   constructor(private authService: AuthService, private userService: UsersService) { }
 
@@ -92,8 +91,8 @@ export class AuthController {
   }
 
   @Post('roles/:email')
-  @ApiBearerAuth()
   @Roles(Role.Admin)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @HttpCode(201)
   @ApiBody({ type: CreateRoleDto })
   @ApiResponse({
