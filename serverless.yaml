@@ -11,7 +11,7 @@ provider:
   name: aws
   ecr:
     images:
-      myImage:
+      myimage: # Nombre de imagen en minúsculas
         uri: 544022947556.dkr.ecr.us-east-1.amazonaws.com/test-ecr-2:latest
   memorySize: 1024 # optional, in MB, default is 1024
   timeout: 6 # optional, in seconds, default is 6
@@ -29,7 +29,7 @@ provider:
 functions:
   main:
     image:
-      name: myImage
+      name: myimage # Nombre de imagen en minúsculas
     events:
       - http:
           method: ANY
