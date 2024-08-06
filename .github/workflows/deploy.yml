@@ -18,6 +18,12 @@ jobs:
         with:
           node-version: '18.x'
 
+      - name: Install dependencies
+        run: npm i
+
+      - name: Build Docker image
+        run: docker build -t nest-exercise-sales .
+
       - name: Log in to Amazon ECR
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -25,17 +31,11 @@ jobs:
         run: |
           aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 544022947556.dkr.ecr.us-east-1.amazonaws.com
 
-      - name: Build Docker image
-        run: docker build -t nest-exercise-sales .
-
       - name: Tag Docker image
         run: docker tag nest-exercise-sales:latest 544022947556.dkr.ecr.us-east-1.amazonaws.com/test-ecr-2:latest
 
       - name: Push Docker image to ECR
         run: docker push 544022947556.dkr.ecr.us-east-1.amazonaws.com/test-ecr-2:latest
-
-      - name: Install serverless globally
-        run: npm install -g serverless
 
       - name: Deploy lambda function
         env:
@@ -49,4 +49,4 @@ jobs:
           DB_USER: ${{ secrets.DB_USER }}
           DB_PASS: ${{ secrets.DB_PASS }}
           DB_DATABASE: ${{ secrets.DB_DATABASE }}
-        run: serverless deploy
+        run: npx serverless deploy
