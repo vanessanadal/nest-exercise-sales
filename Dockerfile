@@ -1,4 +1,4 @@
-FROM public.ecr.aws/lambda/nodejs:18
+FROM public.ecr.aws/lambda/nodejs:14
 
 # Definir la ruta del código fuente
 ENV LAMBDA_TASK_ROOT=/var/task
@@ -10,7 +10,10 @@ COPY . ${LAMBDA_TASK_ROOT}
 # Establecer el directorio de trabajo
 WORKDIR ${LAMBDA_TASK_ROOT}
 
-# Instalar las dependencias
+# Instalar dependencias globales necesarias
+RUN npm install -g @nestjs/cli
+
+# Instalar las dependencias del proyecto
 RUN npm install
 
 # Construir la aplicación
