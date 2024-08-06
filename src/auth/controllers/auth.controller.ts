@@ -105,7 +105,7 @@ export class AuthController {
         lastName: "Chacon",
         email: "vanessanadal14@gmail.com",
         password: "$10$fUfFhMarx1HyEdYKYeLkSeTIzDJonzWbsdyBzYoZKARoEXfrLPe7S",
-        roles: ["guest"],
+        roles: ["admin"],
         "createAt": "2024-08-03T18:01:23.236Z",
         "updateAt": "2024-08-04T01:28:08.000Z",
         "deletedAt": null
