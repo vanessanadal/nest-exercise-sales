@@ -1,4 +1,4 @@
-FROM public.ecr.aws/lambda/nodejs:14
+FROM public.ecr.aws/lambda/nodejs:18
 
 # Definir la ruta del código fuente
 ENV LAMBDA_TASK_ROOT=/var/task
