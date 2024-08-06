@@ -20,4 +20,4 @@ RUN npm install
 RUN npm run build
 
 # Establecer el CMD para iniciar la Lambda
-CMD ["node", "dist/serverless.js"]
+CMD [ "dist/serverless.handler" ]
