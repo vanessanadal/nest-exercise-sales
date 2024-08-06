@@ -12,7 +12,7 @@ import {
 import { LocalAuthGuard } from './../guards/local-auth.guard';
 import { AuthService } from './../services/auth.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 import { RolesGuard } from '../guards/roles.guard';
 import { Roles } from '../decorators/roles.decorator';
@@ -92,6 +92,7 @@ export class AuthController {
   }
 
   @Post('roles/:email')
+  @ApiBearerAuth()
   @Roles(Role.Admin)
   @HttpCode(201)
   @ApiBody({ type: CreateRoleDto })
