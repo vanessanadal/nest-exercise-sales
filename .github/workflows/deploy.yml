@@ -8,6 +8,7 @@ on:
 jobs:
   lambda-deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
@@ -17,23 +18,29 @@ jobs:
         with:
           node-version: '18.x'
 
-      - name: Install serverless globally
-        run: npm install -g serverless
-
-      - name: Configure AWS credentials
+      - name: Log in to Amazon ECR
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
-          aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
-          aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
-          aws configure set region us-east-1 
+          aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 544022947556.dkr.ecr.us-east-1.amazonaws.com
 
-      - name: Install npm dependencies
-        run: npm i
+      - name: Build Docker image
+        run: docker build -t nest-exercise-sales .
+
+      - name: Tag Docker image
+        run: docker tag nest-exercise-sales:latest 544022947556.dkr.ecr.us-east-1.amazonaws.com/test-ecr-2:latest
+
+      - name: Push Docker image to ECR
+        run: docker push 544022947556.dkr.ecr.us-east-1.amazonaws.com/test-ecr-2:latest
+
+      - name: Install serverless globally
+        run: npm install -g serverless
 
       - name: Deploy lambda function
         env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           SERVERLESS_LICENSE_KEY: ${{ secrets.SERVERLESS_LICENSE_KEY }}
           PORT: ${{ env.PORT }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}

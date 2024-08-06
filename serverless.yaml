@@ -7,15 +7,12 @@ useDotenv: true
 plugins:
   - serverless-offline
 
-package:
-  exclude:
-    - node_modules/**
-    - .gitignore
-    - .git/**
-    
 provider:
   name: aws
-  runtime: nodejs18.x
+  ecr:
+    images:
+      myImage:
+        uri: 544022947556.dkr.ecr.us-east-1.amazonaws.com/test-ecr-2:latest
   memorySize: 1024 # optional, in MB, default is 1024
   timeout: 6 # optional, in seconds, default is 6
   stage: dev
@@ -31,11 +28,8 @@ provider:
 
 functions:
   main:
-    handler: dist/serverless.handler
-    package:
-      include:
-        - node_modules/serverless-offline/**
-
+    image:
+      name: myImage
     events:
       - http:
           method: ANY

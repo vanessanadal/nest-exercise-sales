@@ -1,15 +1,20 @@
-FROM node:18-alpine as base
+FROM public.ecr.aws/lambda/nodejs:18
 
-WORKDIR /app
+# Definir la ruta del código fuente
+ENV LAMBDA_TASK_ROOT=/var/task
 
-COPY package.json ./
+# Crear el directorio y copiar el contenido del proyecto
+RUN mkdir -p ${LAMBDA_TASK_ROOT}
+COPY . ${LAMBDA_TASK_ROOT}
 
+# Establecer el directorio de trabajo
+WORKDIR ${LAMBDA_TASK_ROOT}
+
+# Instalar las dependencias
 RUN npm install
 
-COPY . .
-
+# Construir la aplicación
 RUN npm run build
 
-CMD npm run start:prod
-
-EXPOSE 3000
+# Establecer el CMD para iniciar la Lambda
+CMD ["serverless.handler"]
